@@ -31,8 +31,6 @@
   set_fact:
     _heimdall_environment_vars: "{{ _heimdall_environment_vars | combine(heimdall_additional_environment_variables) }}"
 
-- debug: var=_heimdall_environment_vars
-
 - name: ensure the service container is started
   docker_container:
     name: heimdall
