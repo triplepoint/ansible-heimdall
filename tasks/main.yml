@@ -1,0 +1,47 @@
+---
+- name: Ensure Docker-related python packages are present
+  pip: name=docker
+
+- name: Ensure the config directories are present
+  file: path="{{ item }}" state=directory mode=0755
+  with_items:
+    - /etc/heimdall
+
+- name: Ensure all the service configuration files are in place
+  template: src="{{ item.src }}" dest="/etc/heimdall/{{ item.dest }}" mode=0600
+  with_items: "{{ heimdall_template_files }}"
+  notify: restart heimdall
+
+- name: Define the default service Docker volumes
+  set_fact:
+    _heimdall_docker_volumes:
+      - "/etc/heimdall:/config"
+
+- name: Append any additional volume mounts
+  set_fact:
+    _heimdall_docker_volumes: "{{ _heimdall_docker_volumes }} + {{ heimdall_additional_volumes }}"
+
+- name: Define the default Docker environment variables
+  set_fact:
+    _heimdall_environment_vars:
+      PGID: "1000"
+      PUID: "1000"
+
+- name: Append any additional environment variables
+  set_fact:
+    _heimdall_environment_vars: "{{ _heimdall_environment_vars | combine(heimdall_additional_environment_variables) }}"
+
+- debug: var=_heimdall_environment_vars
+
+- name: ensure the service container is started
+  docker_container:
+    name: heimdall
+    hostname: heimdall
+    image: "linuxserver/heimdall:{{ heimdall_docker_version }}"
+    state: started
+    restart_policy: always
+    timeout: 300
+    exposed_ports:
+      - 443
+    volumes: "{{ _heimdall_docker_volumes }}"
+    env: "{{ _heimdall_environment_vars }}"

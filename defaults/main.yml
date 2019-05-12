@@ -1,0 +1,26 @@
+---
+# What version of the linuxserver/heimdall docker image should we
+# install?
+heimdall_docker_version: latest
+
+# A list of src and dest values that define configuration templates to be
+# rendered into the configuration directory.
+# The `dest` values should be file names without the path, and the `src`
+# values should be any resolveable Ansible template file path.
+heimdall_template_files: []
+  # - src: motion.conf.j2
+  #   dest: motion.conf
+  # - src: heimdall.conf.j2
+  #   dest: heimdall.conf
+  # - src: camera-1.conf.j2
+  #   dest: camera-1.conf
+
+# A list of additional volumes to mount into the docker container.  This is
+# useful for things like SSL certificates and custom css/image assets.
+heimdall_additional_volumes: []
+# - "/some/directory:/some/mount:ro"
+# - "/some/file.yml:/some/mount/file.yml:ro"
+
+# A key/value set of environment variables and their values, which will be
+# set on the docker container.
+heimdall_additional_environment_variables: {}
