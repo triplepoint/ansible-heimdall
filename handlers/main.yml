@@ -1,14 +1,5 @@
 ---
 - name: restart heimdall
-  docker_container:
-    name: heimdall
-    hostname: heimdall
-    image: "linuxserver/heimdall:{{ heimdall_docker_version }}"
-    state: started
-    restart_policy: always
-    timeout: 300
-    exposed_ports:
-      - 443
-    volumes: "{{ _heimdall_docker_volumes }}"
-    env: "{{ _heimdall_environment_vars }}"
-    restart: true
+  docker_compose:
+    project_src: /opt/ansible-docker-compose/heimdall
+    restarted: yes

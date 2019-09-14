@@ -24,3 +24,7 @@ heimdall_additional_volumes: []
 # A key/value set of environment variables and their values, which will be
 # set on the docker container.
 heimdall_additional_environment_variables: {}
+
+# If set to a string, the created Docker container will attach to a
+# pre-existing default Docker network, instead of creating its own.
+heimdall_external_default_network: ""
