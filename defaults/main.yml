@@ -27,4 +27,7 @@ heimdall_additional_environment_variables: {}
 
 # If set to a string, the created Docker container will attach to a
 # pre-existing default Docker network, instead of creating its own.
-heimdall_external_default_network: ""
+heimdall_network_name: ""
+
+# Labels to put on the application containers
+heimdall_container_labels: []
