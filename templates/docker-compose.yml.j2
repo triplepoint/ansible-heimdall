@@ -21,10 +21,12 @@ services:
 {% for vol in _heimdall_docker_volumes %}
       - {{ vol }}
 {% endfor %}
+{% if _heimdall_environment_vars %}
     environment:
 {% for k, v in _heimdall_environment_vars.items() %}
       - {{ k }}={{ v }}
 {% endfor %}
+{% endif %}
 {% if heimdall_network_name %}
 networks:
   {{ heimdall_network_name }}:
