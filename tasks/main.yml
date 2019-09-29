@@ -5,6 +5,13 @@
       - docker
       - docker-compose
 
+- name: Ensure the Docker container image is up to date
+  docker_image:
+    name: linuxserver/heimdall
+    source: pull
+    tag: "{{ heimdall_docker_version }}"
+  notify: restart heimdall
+
 - name: Ensure the config directories are present
   file: path="{{ item }}" state=directory mode=0755
   with_items:
