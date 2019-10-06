@@ -2,5 +2,5 @@
 - name: restart heimdall
   docker_compose:
     project_src: /opt/ansible-docker-compose/heimdall
-    restarted: yes
-    pull: yes
+    restarted: true
+    pull: true
