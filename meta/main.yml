@@ -1,18 +1,13 @@
 ---
-  galaxy_info:
-    author: Jonathan Hanson
-    description: Deployment for a Heimdall.site docker container
-
-    license: MIT
-
-    min_ansible_version: 2.0
-
-    platforms:
-      - name: Ubuntu
+galaxy_info:
+  author: Jonathan Hanson
+  description: Deployment for a Heimdall.site docker container
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+    - name: Ubuntu
       versions:
-        - all
-        - 25
-
-        galaxy_tags: []
-
-        dependencies: []
+        - xenial
+        - bionic
+  galaxy_tags: []
+dependencies: []
