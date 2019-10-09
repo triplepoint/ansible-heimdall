@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: heimdall
   author: Jonathan Hanson
   description: Deployment for a Heimdall.site docker container
   license: MIT
