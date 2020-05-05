@@ -12,8 +12,9 @@ services:
 {% endif %}
     restart: always
     ports:
-      - target: 443
-        published: "{{ heimdall_public_port }}"
+      - "{{ heimdall_public_port }}:443"
+      # - target: 443
+      #   published: "{{ heimdall_public_port }}"
 {% if heimdall_network_name %}
     networks:
       - {{ heimdall_network_name }}
