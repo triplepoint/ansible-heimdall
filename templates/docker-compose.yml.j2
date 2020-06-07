@@ -13,6 +13,7 @@ services:
     restart: always
     ports:
       - "{{ heimdall_public_port }}:443"
+      - "127.0.0.1:{{ heimdall_insecure_public_port}}:80"
       # - target: 443
       #   published: "{{ heimdall_public_port }}"
 {% if heimdall_network_name %}

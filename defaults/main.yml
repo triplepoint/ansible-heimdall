@@ -35,3 +35,4 @@ heimdall_container_labels: []
 
 # The public port for the Heimdall server
 heimdall_public_port: 443
+heimdall_insecure_public_port: 80
