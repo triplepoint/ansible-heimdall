@@ -5,11 +5,30 @@
       - docker
       - docker-compose
 
+- name: Ensure the container user group exists
+  group:
+    name: "heimdall"
+    state: present
+    gid: "{{ heimdall_uid_gid }}"
+    system: yes
+
+- name: Ensure the container user exists
+  user:
+    name: "heimdall"
+    state: present
+    uid: "{{ heimdall_uid_gid }}"
+    group: "heimdall"
+    create_home: no
+    system: yes
+    shell: "/usr/sbin/nologin"
+
 - name: Ensure the config directories are present
   file:
     path: "{{ item }}"
     state: directory
-    mode: 0755
+    mode: 0750
+    owner: "heimdall"
+    group: "heimdall"
   with_items:
     - /etc/heimdall
 
@@ -18,6 +37,8 @@
     src: "{{ item.src }}"
     dest: "/etc/heimdall/{{ item.dest }}"
     mode: 0600
+    owner: "heimdall"
+    group: "heimdall"
   with_items: "{{ heimdall_template_files }}"
   notify: restart heimdall
 
@@ -33,8 +54,8 @@
 - name: Define the default Docker environment variables
   set_fact:
     _heimdall_environment_vars:
-      PGID: "1000"
-      PUID: "1000"
+      PGID: "{{ heimdall_uid_gid }}"
+      PUID: "{{ heimdall_uid_gid }}"
 
 - name: Append any additional environment variables
   set_fact:

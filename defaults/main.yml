@@ -32,3 +32,7 @@ heimdall_network_name: ""
 
 # Labels to put on the application containers
 heimdall_container_labels: []
+
+# The User ID and Group ID of the process in the container
+# Note that this user and group will be created on the host
+heimdall_uid_gid: 1097
