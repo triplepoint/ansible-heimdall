@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   role_name: heimdall
+  namespace: triplepoint
   author: Jonathan Hanson
   description: Deployment for a Heimdall.site docker container
   license: MIT
