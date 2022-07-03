@@ -43,7 +43,7 @@
 
 - name: Append any additional volume mounts
   set_fact:
-    _heimdall_docker_volumes: "{{ _heimdall_docker_volumes }} + {{ heimdall_additional_volumes }}"
+    _heimdall_docker_volumes: "{{ _heimdall_docker_volumes | union(heimdall_additional_volumes) }}"
 
 - name: Define the default Docker environment variables
   set_fact:
