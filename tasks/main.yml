@@ -1,13 +1,13 @@
 ---
 - name: Ensure the container user group exists
-  group:
+  ansible.builtin.group:
     name: "heimdall"
     state: present
     gid: "{{ heimdall_uid_gid }}"
     system: true
 
 - name: Ensure the container user exists
-  user:
+  ansible.builtin.user:
     name: "heimdall"
     state: present
     uid: "{{ heimdall_uid_gid }}"
@@ -17,7 +17,7 @@
     shell: "/usr/sbin/nologin"
 
 - name: Ensure the config directories are present
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: 0750
@@ -27,42 +27,42 @@
     - /etc/heimdall
 
 - name: Ensure all the service configuration files are in place
-  template:
+  ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "/etc/heimdall/{{ item.dest }}"
     mode: 0600
     owner: "heimdall"
     group: "heimdall"
   with_items: "{{ heimdall_template_files }}"
-  notify: restart heimdall
+  notify: Restart heimdall
 
 - name: Define the default service Docker volumes
-  set_fact:
+  ansible.builtin.set_fact:
     _heimdall_docker_volumes:
       - "/etc/heimdall:/config"
 
 - name: Append any additional volume mounts
-  set_fact:
+  ansible.builtin.set_fact:
     _heimdall_docker_volumes: "{{ _heimdall_docker_volumes | union(heimdall_additional_volumes) }}"
 
 - name: Define the default Docker environment variables
-  set_fact:
+  ansible.builtin.set_fact:
     _heimdall_environment_vars:
       PGID: "{{ heimdall_uid_gid }}"
       PUID: "{{ heimdall_uid_gid }}"
 
 - name: Append any additional environment variables
-  set_fact:
+  ansible.builtin.set_fact:
     _heimdall_environment_vars: "{{ _heimdall_environment_vars | combine(heimdall_additional_environment_variables) }}"
 
 - name: Ensure the docker-compose template directory exists
-  file:
+  ansible.builtin.file:
     state: directory
     path: "/opt/ansible-docker-compose/heimdall"
     mode: 0755
 
 - name: Ensure this service's docker-compose template is present
-  template:
+  ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: /opt/ansible-docker-compose/heimdall/docker-compose.yml
     mode: 0644
