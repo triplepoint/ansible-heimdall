@@ -1,6 +1,6 @@
 ---
 - name: Restart heimdall
-  docker_compose:
+  community.docker.docker_compose:
     project_src: /opt/ansible-docker-compose/heimdall
     restarted: true
     pull: true
